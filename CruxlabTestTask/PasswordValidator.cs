@@ -81,13 +81,18 @@ namespace CruxlabTestTask
             if (!requirementsAndPasswordMatch.Success)
                 return null;
 
-            return new PasswordInfo()
+            PasswordInfo passwordInfo = new PasswordInfo()
             {
                 RequiredSymbol = requirementsAndPasswordMatch.Groups[1].Value[0],
                 MinAmount = Convert.ToInt32(requirementsAndPasswordMatch.Groups[2].Value),
                 MaxAmount = Convert.ToInt32(requirementsAndPasswordMatch.Groups[3].Value),
                 Password = requirementsAndPasswordMatch.Groups[4].Value
             };
+
+            if(passwordInfo.MinAmount > passwordInfo.MaxAmount)
+                return null;
+
+            return passwordInfo;
         }
 
         /// <summary>
